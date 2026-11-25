@@ -134,6 +134,17 @@
 .paper-sign label { display: block; }
 .paper-name { color: #1f3a8a; }
 
+/* the trap for robots (js/guard.js): far away from the screen, not
+   display:none, which some robots know to skip */
+.trap {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 /* the sheet shakes when the child tries to send it empty */
 .paper.is-empty { animation: shake .45s ease-in-out; }
 @keyframes shake {

@@ -17,6 +17,11 @@ export const LIMITS = {
   // form: Response validation → Length → Maximum character count)
   message: 1000,
   name: 40,
+  // after a letter has gone, the next one can be sent only after this pause
+  pauseSeconds: 60,
+  // a letter sent sooner than this after the page opened was not written by
+  // a child: it is quietly dropped
+  minSecondsOnPage: 3,
   // how long to wait for Google before saying the letter did not go
   timeoutSeconds: 20,
 };

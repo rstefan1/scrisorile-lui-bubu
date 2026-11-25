@@ -156,6 +156,12 @@
                    placeholder="prenumele tău" autocomplete="given-name" spellcheck="false">
           </p>
         </div>
+
+        <!-- a trap for robots: people never see this box (see js/guard.js) -->
+        <div class="trap" aria-hidden="true">
+          <label for="website">Nu completa acest câmp</label>
+          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
       </form>
 
       <!-- how much room is left on the sheet -->

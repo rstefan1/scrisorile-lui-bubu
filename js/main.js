@@ -2,9 +2,11 @@
 // button and the cards shown after the letter has gone (or has not).
 
 import { LIMITS } from './config.js';
+import { Guard } from './guard.js';
 import { setupLamp } from './lamp.js';
 import { Letter } from './letter.js';
 import { sendLetter } from './send.js';
+import { seconds } from './words.js';
 
 const $ = (id) => document.getElementById(id);
 
@@ -24,6 +26,8 @@ const letter = new Letter({
   roomFill: $('room-fill'),
   roomText: $('room-text'),
 });
+
+const guard = new Guard({ trap: $('website') });
 
 setupLamp($('lamp'));
 
@@ -46,9 +50,26 @@ async function send() {
     return;
   }
 
+  const verdict = guard.check(letter.read());
+  if (verdict === 'robot') {
+    // nothing is sent, but a robot must not learn that it was caught
+    letter.clearMessage();
+    show('sent');
+    return;
+  }
+  if (verdict === 'too-long') {
+    showNote('Scrisoarea e prea lungă pentru o singură foaie. Mai scurtează puțin!');
+    return;
+  }
+  if (verdict === 'pause') {
+    showNote(`Bubu încă citește scrisoarea ta de adineauri. Mai așteaptă ${seconds(guard.pauseLeft())}!`, { pause: true });
+    return;
+  }
+
   setBusy(true);
   try {
     await sendLetter(letter.read());
+    guard.sent();
     letter.clearMessage();
     show('sent');
   } catch {
@@ -61,9 +82,23 @@ async function send() {
 function setBusy(on) {
   busy = on;
   sendButton.classList.toggle('is-busy', on);
-  sendButton.setAttribute('aria-disabled', String(on));
-  sendLabel.textContent = on ? 'Se trimite…' : 'Trimite scrisoarea';
+  showButton();
 }
+
+/** The send button: busy, waiting for the pause to end, or ready. */
+function showButton() {
+  const left = guard.pauseLeft();
+  sendButton.setAttribute('aria-disabled', String(busy || left > 0));
+  if (busy) sendLabel.textContent = 'Se trimite…';
+  else if (left > 0) sendLabel.textContent = `Mai așteaptă ${seconds(left)}`;
+  else sendLabel.textContent = 'Trimite scrisoarea';
+  // once the pause is over, its note goes away too
+  if (left === 0 && note.dataset.pause) hideNote();
+}
+
+// the button counts down the pause, second by second
+showButton();
+setInterval(showButton, 1000);
 
 /** Shows one screen: "desk" (the sheet), "sent" or "failed". */
 function show(name) {
@@ -78,11 +113,14 @@ function show(name) {
   }
 }
 
-function showNote(text) {
+function showNote(text, { pause = false } = {}) {
   note.textContent = text;
   note.hidden = false;
+  if (pause) note.dataset.pause = '1';
+  else delete note.dataset.pause;
 }
 
 function hideNote() {
   note.hidden = true;
+  delete note.dataset.pause;
 }
