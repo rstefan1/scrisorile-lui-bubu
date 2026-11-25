@@ -19,10 +19,8 @@
   <link rel="stylesheet" href="css/envelope.css">
 </head>
 <body>
-  <!-- the wooden table seen from above and the warm light of the lamp (decoration only) -->
-  <div class="scene" aria-hidden="true">
-    <span class="scene-light"></span>
-  </div>
+  <!-- the wooden table seen from above, a little darker in the corners (decoration only) -->
+  <div class="scene" aria-hidden="true"></div>
 
   <header class="hero">
     <h1 class="hero-title">Scrisori pentru <span class="hero-bubu">Bubu</span></h1>
@@ -88,20 +86,9 @@
       </svg>
     </div>
 
-    <!-- the desk lamp: a tap turns it off and on again -->
+    <!-- the desk lamp: a tap turns its bulb off and on again -->
     <button class="lamp" id="lamp" type="button" aria-pressed="true" aria-label="Lampa de birou">
       <svg class="lamp-art" viewBox="0 0 260 300" aria-hidden="true">
-        <defs>
-          <linearGradient id="lamp-beam" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#ffe29a" stop-opacity=".5"/>
-            <stop offset="1" stop-color="#ffd27a" stop-opacity="0"/>
-          </linearGradient>
-          <radialGradient id="lamp-glow">
-            <stop offset="0" stop-color="#fff6c8"/><stop offset=".5" stop-color="#ffd76a" stop-opacity=".6"/><stop offset="1" stop-color="#ffb84d" stop-opacity="0"/>
-          </radialGradient>
-          <!-- the edges of the light are soft -->
-          <filter id="lamp-soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="14"/></filter>
-        </defs>
         <!-- the base and the two arms -->
         <ellipse cx="62" cy="282" rx="56" ry="15" fill="#8e1b1b"/>
         <ellipse cx="62" cy="276" rx="56" ry="15" fill="#e53935"/>
@@ -113,12 +100,10 @@
         <circle cx="188" cy="86" r="10" fill="#8e1b1b"/><circle cx="188" cy="86" r="4" fill="#ffcf3f"/>
         <!-- the head, turned down towards the sheet -->
         <g transform="translate(200 96) rotate(-38)">
-          <path class="lamp-beam" d="M-46 70 46 70 330 760-330 760z" fill="url(#lamp-beam)" filter="url(#lamp-soft)"/>
-          <ellipse class="lamp-glow" cx="0" cy="74" rx="90" ry="40" fill="url(#lamp-glow)"/>
           <path d="M-14-8h28l4 14h-36z" fill="#8e1b1b"/>
           <path d="M-18 4h36l34 66q-52 14-104 0z" fill="#e53935"/>
           <path d="M-10 6h8l-30 60q-8-1-14-3z" fill="#ff7b72" opacity=".6"/>
-          <ellipse class="lamp-bulb" cx="0" cy="70" rx="44" ry="9" fill="#fff4b8"/>
+          <ellipse class="lamp-bulb" cx="0" cy="70" rx="44" ry="9" fill="#ffd93b"/>
         </g>
       </svg>
     </button>

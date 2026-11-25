@@ -1,7 +1,7 @@
 /* Scrisori pentru Bubu — the cosy table the letter is written on: the wood
-   seen from above, the warm light of the desk lamp and the things lying
-   around the sheet (a cup of tea, a plant, a pencil, crayons). All of it is decoration only.
-   A tap on the lamp turns it off (html.lamp-off) and on again. */
+   seen from above, the desk lamp and the things lying around the sheet
+   (a cup of tea, a plant, a pencil, crayons). All of it is decoration
+   only. A tap on the lamp turns its bulb off and on again. */
 
 /* ---------- The wood ---------- */
 body {
@@ -15,37 +15,14 @@ body {
       rgba(255, 236, 200, .07) 0 240px, rgba(60, 25, 5, .08) 240px 480px);
 }
 
-/* ---------- The light of the lamp ---------- */
+/* ---------- The corners of the table, a little darker ---------- */
 .scene {
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
+  background: radial-gradient(ellipse 120% 95% at 50% 42%, transparent 50%, rgba(40, 16, 4, .45) 100%);
 }
-.scene-light {
-  position: absolute;
-  inset: 0;
-  background:
-    /* the warm pool of light on the table */
-    radial-gradient(ellipse 58% 48% at 45% 44%, rgba(255, 214, 140, .55), rgba(255, 190, 110, .2) 55%, transparent 78%),
-    /* the corners of the room are in the shadow */
-    radial-gradient(ellipse 120% 95% at 50% 42%, transparent 42%, rgba(40, 16, 4, .62) 100%);
-  transition: opacity .6s ease;
-}
-
-/* the lamp is off: the room gets dark */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 5;
-  background: radial-gradient(ellipse at 50% 40%, rgba(16, 10, 30, .38), rgba(8, 4, 18, .7));
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .6s ease;
-}
-.lamp-off body::after { opacity: 1; }
-.lamp-off .scene-light { opacity: .25; }
 
 /* the content stands above the table */
 .main,
@@ -64,7 +41,7 @@ body::after {
   border: 0;
   background: none;
   cursor: pointer;
-  /* only the lamp itself can be tapped, not its light */
+  /* only the drawing can be tapped, not the empty corners of its box */
   pointer-events: none;
   -webkit-tap-highlight-color: transparent;
 }
@@ -74,18 +51,12 @@ body::after {
   height: auto;
   overflow: visible;
 }
-.lamp-art > :not(defs),
-.lamp-art g > * { pointer-events: visiblePainted; }
-.lamp-art .lamp-beam,
-.lamp-art .lamp-glow { pointer-events: none; }
+.lamp-art * { pointer-events: visiblePainted; }
 .lamp:focus-visible { outline: none; }
-.lamp:focus-visible .lamp-bulb { stroke: var(--gold); stroke-width: 6; }
+.lamp:focus-visible .lamp-bulb { stroke: var(--gold-dark); stroke-width: 6; }
 
-.lamp-beam,
-.lamp-glow { transition: opacity .4s ease; }
-.lamp-bulb { transition: fill .3s ease; }
-.lamp[aria-pressed="false"] .lamp-beam,
-.lamp[aria-pressed="false"] .lamp-glow { opacity: 0; }
+/* the bulb: yellow when the lamp is on, grey when it is off */
+.lamp-bulb { transition: fill .25s ease; }
 .lamp[aria-pressed="false"] .lamp-bulb { fill: #d8d0bd; }
 .lamp.is-clicked .lamp-art { animation: lamp-nod .35s ease-out; }
 @keyframes lamp-nod {
