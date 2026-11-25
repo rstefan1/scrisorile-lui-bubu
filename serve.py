@@ -9,8 +9,12 @@ Usage:
     python3 serve.py              # http://localhost:8000/
     python3 serve.py 8080         # another port
     python3 serve.py 8000 0.0.0.0 # reachable from a phone on the same network
+
+When the port is taken (e.g. by the server of another site of Bubu), the next
+free one is used and printed.
 """
 
+import errno
 import functools
 import http.server
 import pathlib
@@ -37,12 +41,25 @@ def main():
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 8000
     host = sys.argv[2] if len(sys.argv) > 2 else '127.0.0.1'
     handler = functools.partial(NoCacheHandler, directory=str(ROOT))
-    with http.server.ThreadingHTTPServer((host, port), handler) as server:
-        print(f'Scrisori pentru Bubu: http://localhost:{port}/  (Ctrl+C to stop)')
+    with open_server(host, port, handler) as server:
+        port = server.server_address[1]
+        print(f'Scrisori pentru Bubu: http://localhost:{port}/  (Ctrl+C to stop)', flush=True)
         try:
             server.serve_forever()
         except KeyboardInterrupt:
             print()
+
+
+def open_server(host, port, handler, tries=20):
+    """A server on the port, or on the next free one when it is taken."""
+    for candidate in range(port, port + tries):
+        try:
+            return http.server.ThreadingHTTPServer((host, candidate), handler)
+        except OSError as error:
+            if error.errno != errno.EADDRINUSE:
+                raise
+            print(f'Port {candidate} is taken, trying {candidate + 1}...', flush=True)
+    sys.exit(f'No free port between {port} and {port + tries - 1}.')
 
 
 if __name__ == '__main__':

@@ -41,7 +41,8 @@ The page uses JavaScript modules, so it must be served over HTTP (opening
 python3 serve.py
 ```
 
-Then open <http://localhost:8000/>. To try it on a phone or tablet in the
+Then open the address it prints: <http://localhost:8000/>, or the next free
+port when 8000 is already taken (e.g. by the server of trenul-lui-bubu). To try it on a phone or tablet in the
 same Wi-Fi network: `python3 serve.py 8000 0.0.0.0` and open
 `http://<computer IP>:8000/` on the device.
 
