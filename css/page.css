@@ -1,4 +1,4 @@
-/* Scrisori pentru Bubu — the page around the letter: the sky, the title,
+/* Scrisori pentru Bubu — the page around the letter: the title,
    the footer and the things used everywhere (buttons, hidden labels).
    Animations use only transform and opacity (cheap on old devices). */
 
@@ -15,8 +15,8 @@ body {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(var(--sky-top), var(--sky-bottom) 70%);
-  background-attachment: fixed;
+  /* the wood of the table is in desk.css */
+  background-color: var(--wood);
   color: var(--ink);
   font-family: var(--font);
   font-size: clamp(18px, 2.6vw, 22px);
@@ -39,89 +39,12 @@ body {
   border: 0;
 }
 
-/* ---------- The sky ---------- */
-.sky {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-/* a cloud: one round body and two puffs on top */
-.cloud {
-  position: absolute;
-  width: 160px;
-  height: 52px;
-  border-radius: 52px;
-  background: #fff;
-  opacity: .9;
-  animation: drift 60s linear infinite;
-}
-.cloud::before,
-.cloud::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  background: inherit;
-}
-.cloud::before { width: 70px; height: 70px; left: 24px; top: -36px; }
-.cloud::after { width: 54px; height: 54px; left: 80px; top: -24px; }
-.cloud--1 { top: 9%; left: -10%; animation-duration: 70s; }
-.cloud--2 { top: 24%; left: 55%; transform: scale(.7); animation-duration: 95s; animation-delay: -40s; }
-.cloud--3 { top: 52%; left: 20%; transform: scale(1.2); opacity: .6; animation-duration: 120s; animation-delay: -70s; }
-
-@keyframes drift {
-  from { translate: -30vw 0; }
-  to { translate: 130vw 0; }
-}
-
-.float-heart {
-  position: absolute;
-  bottom: -40px;
-  color: var(--pink);
-  font-size: 30px;
-  opacity: 0;
-  animation: rise 14s ease-in infinite;
-}
-.float-heart--1 { left: 6%; animation-delay: 0s; }
-.float-heart--2 { left: 88%; font-size: 24px; color: var(--red); animation-delay: -4s; }
-.float-heart--3 { left: 18%; font-size: 20px; color: var(--orange); animation-delay: -8s; }
-.float-heart--4 { left: 76%; font-size: 34px; animation-delay: -11s; }
-
-@keyframes rise {
-  0% { transform: translateY(0) rotate(-10deg); opacity: 0; }
-  10% { opacity: .75; }
-  50% { transform: translateY(-50vh) rotate(12deg); }
-  90% { opacity: .5; }
-  100% { transform: translateY(-105vh) rotate(-8deg); opacity: 0; }
-}
-
-/* two soft green hills at the bottom */
-.hills {
-  position: absolute;
-  left: -10%;
-  right: -10%;
-  bottom: -60px;
-  height: 180px;
-  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
-  background: var(--grass);
-}
-.hills::before {
-  content: "";
-  position: absolute;
-  left: 45%;
-  right: -10%;
-  bottom: 60px;
-  height: 150px;
-  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
-  background: var(--grass-dark);
-  z-index: -1;
-}
-
 /* ---------- The title ---------- */
 .hero {
-  padding: max(var(--gap), env(safe-area-inset-top)) var(--gap) 0;
+  position: relative;
+  z-index: 1;
+  /* room for the string of lights at the top */
+  padding: max(46px, env(safe-area-inset-top)) var(--gap) 0;
   text-align: center;
 }
 .hero-title {
@@ -153,11 +76,13 @@ body {
   margin: 6px 0 0;
   font-size: clamp(21px, 4vw, 30px);
   font-weight: 800;
-  color: var(--ink);
+  color: #fff3d6;
+  text-shadow: 0 2px 0 rgba(60, 30, 10, .55), 0 0 18px rgba(60, 30, 10, .5);
 }
 
 /* ---------- The main part ---------- */
 .main {
+  position: relative;
   flex: 1;
   width: 100%;
   max-width: 820px;
@@ -199,12 +124,14 @@ body {
 
 /* ---------- The footer ---------- */
 .foot {
+  position: relative;
+  z-index: 1;
   padding: var(--gap) var(--gap) max(var(--gap), env(safe-area-inset-bottom));
   text-align: center;
   font-size: 16px;
   font-weight: 700;
-  color: #fff;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, .35);
+  color: #f6dfc0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .5);
 }
 .foot p { margin: 0; }
 
@@ -224,5 +151,4 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
   }
-  .float-heart { display: none; }
 }

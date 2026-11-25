@@ -2,6 +2,7 @@
 // button and the cards shown after the letter has gone (or has not).
 
 import { LIMITS } from './config.js';
+import { setupLamp } from './lamp.js';
 import { Letter } from './letter.js';
 import { sendLetter } from './send.js';
 
@@ -23,6 +24,8 @@ const letter = new Letter({
   roomFill: $('room-fill'),
   roomText: $('room-text'),
 });
+
+setupLamp($('lamp'));
 
 // Enter in the name box must not reload the page
 $('letter').addEventListener('submit', (event) => event.preventDefault());

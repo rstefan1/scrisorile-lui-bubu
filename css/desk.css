@@ -1,0 +1,178 @@
+/* Scrisori pentru Bubu — the cosy table the letter is written on: the wood
+   seen from above, the warm light of the desk lamp, a string of little
+   lights along the top and the things lying around the sheet (a cup of
+   cocoa, a plant, a pencil, crayons). All of it is decoration only.
+   A tap on the lamp turns it off (html.lamp-off) and on again. */
+
+/* ---------- The wood ---------- */
+body {
+  background-image:
+    /* the grain of the wood: stretched noise, drawn once by the browser */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2400' height='400'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.003 0.11' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .32 0 0 0 0 .16 0 0 0 0 .05 1.7 0 0 0 -.68'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"),
+    /* the joints between the planks, every plank a little lighter or darker */
+    repeating-linear-gradient(180deg,
+      transparent 0 236px, rgba(70, 34, 10, .55) 236px 239px, rgba(255, 228, 186, .18) 239px 241px, transparent 241px 480px),
+    repeating-linear-gradient(180deg,
+      rgba(255, 236, 200, .07) 0 240px, rgba(60, 25, 5, .08) 240px 480px);
+}
+
+/* ---------- The light of the lamp ---------- */
+.scene {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.scene-light {
+  position: absolute;
+  inset: 0;
+  background:
+    /* the warm pool of light on the table */
+    radial-gradient(ellipse 58% 48% at 45% 44%, rgba(255, 214, 140, .55), rgba(255, 190, 110, .2) 55%, transparent 78%),
+    /* the corners of the room are in the shadow */
+    radial-gradient(ellipse 120% 95% at 50% 42%, transparent 42%, rgba(40, 16, 4, .62) 100%);
+  transition: opacity .6s ease;
+}
+
+/* the lamp is off: the room gets dark, the little lights glow brighter */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  background: radial-gradient(ellipse at 50% 40%, rgba(16, 10, 30, .38), rgba(8, 4, 18, .7));
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .6s ease;
+}
+.lamp-off body::after { opacity: 1; }
+.lamp-off .scene-light { opacity: .25; }
+
+/* the content stands above the table */
+.main,
+.hero,
+.foot { z-index: 1; }
+
+/* ---------- The string of little lights ---------- */
+.fairy-lights {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  z-index: 6;
+  pointer-events: none;
+}
+.fairy-wire {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.bulb {
+  --c: #ffcf3f;
+  position: absolute;
+  width: 14px;
+  height: 20px;
+  margin: 3px 0 0 -7px;
+  border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+  background: var(--c);
+  box-shadow: 0 0 12px 4px var(--c);
+  animation: twinkle 2.2s ease-in-out var(--delay, 0s) infinite alternate;
+}
+.bulb::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: 3px;
+  width: 8px;
+  height: 7px;
+  border-radius: 2px;
+  background: #3b2414;
+}
+.bulb--red { --c: #ff6b5e; }
+.bulb--orange { --c: #ffa24a; }
+.bulb--pink { --c: #ff8fbf; }
+@keyframes twinkle {
+  from { opacity: .55; }
+  to { opacity: 1; }
+}
+.lamp-off .bulb { box-shadow: 0 0 20px 8px var(--c); }
+
+/* ---------- The desk lamp ---------- */
+.lamp {
+  position: absolute;
+  z-index: 2;
+  top: -36px;
+  left: -200px;
+  width: 260px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  /* only the lamp itself can be tapped, not its light */
+  pointer-events: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.lamp-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.lamp-art > :not(defs),
+.lamp-art g > * { pointer-events: visiblePainted; }
+.lamp-art .lamp-beam,
+.lamp-art .lamp-glow { pointer-events: none; }
+.lamp:focus-visible { outline: none; }
+.lamp:focus-visible .lamp-bulb { stroke: var(--gold); stroke-width: 6; }
+
+.lamp-beam,
+.lamp-glow { transition: opacity .4s ease; }
+.lamp-bulb { transition: fill .3s ease; }
+.lamp[aria-pressed="false"] .lamp-beam,
+.lamp[aria-pressed="false"] .lamp-glow { opacity: 0; }
+.lamp[aria-pressed="false"] .lamp-bulb { fill: #d8d0bd; }
+.lamp.is-clicked .lamp-art { animation: lamp-nod .35s ease-out; }
+@keyframes lamp-nod {
+  40% { transform: rotate(-2deg) translateY(2px); }
+}
+
+/* ---------- Things on the table ---------- */
+.things {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.thing {
+  position: absolute;
+  height: auto;
+  filter: drop-shadow(4px 8px 6px rgba(50, 22, 4, .45));
+}
+/* Every thing stands in the middle of the free strip of table beside the
+   column of the page (820px wide); on a narrow screen that strip is thin,
+   so the things are partly under the sheet, peeking out. */
+.things { --side: calc((820px - 100vw) / 4); }
+.thing--mug { --w: 140px; width: var(--w); top: 70px; right: max(calc(var(--side) - var(--w) / 2), -280px); }
+.thing--pencil { --w: 220px; width: var(--w); top: 520px; right: max(calc(var(--side) - var(--w) / 2), -300px); transform: rotate(-58deg); }
+.thing--crayons { --w: 150px; width: var(--w); top: 270px; left: max(calc(var(--side) - var(--w) / 2), -280px); }
+.thing--plant { --w: 120px; width: var(--w); top: 560px; left: max(calc(var(--side) - var(--w) / 2), -260px); transform: rotate(-12deg); }
+
+/* the desk, the cards and the lamp stay above the things */
+.desk,
+.card { position: relative; z-index: 1; }
+
+/* phones: the lamp leans in from the left edge, only the pencil is left */
+@media (max-width: 700px) {
+  .lamp { width: 170px; left: -132px; top: -20px; }
+  .thing--mug,
+  .thing--plant,
+  .thing--crayons { display: none; }
+  .thing--pencil { width: 180px; right: -40px; top: auto; bottom: 150px; transform: rotate(-24deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bulb { animation: none; opacity: .9; }
+}
