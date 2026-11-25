@@ -21,7 +21,7 @@
   --paper-line: #b7d6f2;
   --paper-margin: #f28b8b;
   /* one line of the notebook: the text of the letter is written on it */
-  --line: clamp(42px, 9vw, 54px);
+  --line: clamp(40px, min(9vw, 11vh), 54px);
 
   --font: 'Baloo 2', 'Comic Sans MS', system-ui, sans-serif;
   --font-title: 'Fredoka', 'Baloo 2', 'Comic Sans MS', system-ui, sans-serif;

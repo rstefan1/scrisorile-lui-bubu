@@ -10,17 +10,18 @@
      is-back     it could not go: it shakes its head */
 
 .post {
+  /* the width of the envelope: smaller on narrow and on short screens */
+  --w: min(360px, 82vw, 62vh);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: clamp(24px, 5vw, 40px);
   /* just the room above the envelope that the little letter needs while
      it sticks out (78% of its height, see .envelope-letter) */
-  padding-top: calc(min(360px, 82vw) * .48);
+  padding-top: calc(var(--w) * .48);
 }
 
 .envelope {
-  --w: min(360px, 82vw);
   position: relative;
   width: var(--w);
   height: calc(var(--w) * .64);

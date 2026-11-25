@@ -215,3 +215,9 @@
   .room { flex-direction: column; gap: 6px; border-radius: var(--radius-s); }
   .room-bar { width: 100%; flex: none; }
 }
+
+/* phones held sideways: Bubu sits a little smaller on the sheet */
+@media (max-height: 520px) and (orientation: landscape) {
+  .paper-bubu { width: 80px; top: -50px; }
+  .paper { padding-top: calc(var(--line) * .6); }
+}

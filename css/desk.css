@@ -88,9 +88,12 @@ body {
 .desk,
 .card { position: relative; z-index: 1; }
 
-/* phones: the lamp leans in from the left edge, only the pencil is left */
-@media (max-width: 700px) {
+/* phones (held either way): the lamp leans in from the left edge */
+@media (max-width: 700px), (max-height: 520px) and (orientation: landscape) {
   .lamp { width: 170px; left: -132px; top: -20px; }
+}
+/* narrow phones: only the pencil is left on the table */
+@media (max-width: 700px) {
   .thing--mug,
   .thing--plant,
   .thing--crayons { display: none; }

@@ -88,6 +88,8 @@ body {
   max-width: 820px;
   margin: 0 auto;
   padding: clamp(56px, 10vw, 84px) var(--gap) var(--gap);
+  padding-left: max(var(--gap), env(safe-area-inset-left));
+  padding-right: max(var(--gap), env(safe-area-inset-right));
 }
 
 /* ---------- Buttons ---------- */
@@ -151,4 +153,13 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
   }
+}
+
+/* phones held sideways (short screens): a smaller title, so the sheet is
+   seen right away */
+@media (max-height: 520px) and (orientation: landscape) {
+  .hero-title { margin-top: 0; font-size: 34px; }
+  .hero-subtitle { margin-top: 0; font-size: 19px; }
+  .main { padding-top: 52px; }
+  .main.is-card { padding-top: 96px; }
 }
