@@ -76,6 +76,7 @@ body {
   font-size: clamp(21px, 4vw, 30px);
   font-weight: 800;
   color: #fff3d6;
+  text-wrap: balance;
   text-shadow: 0 2px 0 rgba(60, 30, 10, .55), 0 0 18px rgba(60, 30, 10, .5);
 }
 
