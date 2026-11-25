@@ -46,6 +46,35 @@ body {
   padding: max(var(--gap), env(safe-area-inset-top)) var(--gap) 0;
   text-align: center;
 }
+/* back to the village of Bubu, the same button as in trenul-lui-bubu:
+   above the title on narrow screens, in the top left corner on wide ones */
+.back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  margin: 0 auto 0 0;
+  padding: 6px 16px 7px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .94);
+  color: var(--red-dark);
+  font-size: 17px;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: var(--shadow-s);
+}
+.back:hover,
+.back:focus-visible { background: #fff; }
+.back:focus-visible { outline: 4px solid var(--gold); outline-offset: 2px; }
+@media (min-width: 900px), (max-height: 520px) and (orientation: landscape) {
+  .back {
+    position: absolute;
+    top: max(var(--gap), env(safe-area-inset-top));
+    left: max(var(--gap), env(safe-area-inset-left));
+    margin: 0;
+  }
+}
+
 .hero-title {
   margin: clamp(8px, 2vh, 24px) 0 0;
   font-family: var(--font-title);

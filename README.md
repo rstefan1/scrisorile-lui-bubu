@@ -32,6 +32,13 @@ assets/             Bubu, the favicon and the icon
 serve.py            local development server
 ```
 
+## Published in lumea-lui-bubu
+
+The site is published inside [lumea-lui-bubu](../lumea-lui-bubu), in its
+folder `scrisorile-lui-bubu/` (a git submodule; the post office of the
+village opens it). The “← Lumea lui Bubu” button goes back to the village
+(`../`), so every path in the site must stay relative.
+
 ## Running locally
 
 The page uses JavaScript modules, so it must be served over HTTP (opening
