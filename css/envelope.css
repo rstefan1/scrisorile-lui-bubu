@@ -14,9 +14,9 @@
   flex-direction: column;
   align-items: center;
   gap: clamp(24px, 5vw, 40px);
-  /* room above the envelope for the open flap and the little letter */
-  padding-top: clamp(150px, 34vw, 230px);
-  min-height: 60vh;
+  /* just the room above the envelope that the little letter needs while
+     it sticks out (78% of its height, see .envelope-letter) */
+  padding-top: calc(min(360px, 82vw) * .48);
 }
 
 .envelope {

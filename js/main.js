@@ -119,7 +119,12 @@ setInterval(showButton, 1000);
 function show(name) {
   for (const [key, el] of Object.entries(screens)) el.hidden = key !== name;
   document.querySelector('.main').classList.toggle('is-card', name === 'sent' || name === 'failed');
-  window.scrollTo({ top: 0 });
+  if (name === 'post') {
+    // the envelope in the middle of the screen, even on a short laptop screen
+    $('envelope').scrollIntoView({ block: 'center' });
+  } else {
+    window.scrollTo({ top: 0 });
+  }
   if (name === 'desk') {
     letter.update();
     letter.focus();
