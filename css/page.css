@@ -43,8 +43,7 @@ body {
 .hero {
   position: relative;
   z-index: 1;
-  /* room for the string of lights at the top */
-  padding: max(46px, env(safe-area-inset-top)) var(--gap) 0;
+  padding: max(var(--gap), env(safe-area-inset-top)) var(--gap) 0;
   text-align: center;
 }
 .hero-title {

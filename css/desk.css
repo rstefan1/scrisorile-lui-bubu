@@ -1,7 +1,6 @@
 /* Scrisori pentru Bubu — the cosy table the letter is written on: the wood
-   seen from above, the warm light of the desk lamp, a string of little
-   lights along the top and the things lying around the sheet (a cup of
-   cocoa, a plant, a pencil, crayons). All of it is decoration only.
+   seen from above, the warm light of the desk lamp and the things lying
+   around the sheet (a cup of tea, a plant, a pencil, crayons). All of it is decoration only.
    A tap on the lamp turns it off (html.lamp-off) and on again. */
 
 /* ---------- The wood ---------- */
@@ -34,7 +33,7 @@ body {
   transition: opacity .6s ease;
 }
 
-/* the lamp is off: the room gets dark, the little lights glow brighter */
+/* the lamp is off: the room gets dark */
 body::after {
   content: "";
   position: fixed;
@@ -52,52 +51,6 @@ body::after {
 .main,
 .hero,
 .foot { z-index: 1; }
-
-/* ---------- The string of little lights ---------- */
-.fairy-lights {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 70px;
-  z-index: 6;
-  pointer-events: none;
-}
-.fairy-wire {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-.bulb {
-  --c: #ffcf3f;
-  position: absolute;
-  width: 14px;
-  height: 20px;
-  margin: 3px 0 0 -7px;
-  border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
-  background: var(--c);
-  box-shadow: 0 0 12px 4px var(--c);
-  animation: twinkle 2.2s ease-in-out var(--delay, 0s) infinite alternate;
-}
-.bulb::before {
-  content: "";
-  position: absolute;
-  top: -5px;
-  left: 3px;
-  width: 8px;
-  height: 7px;
-  border-radius: 2px;
-  background: #3b2414;
-}
-.bulb--red { --c: #ff6b5e; }
-.bulb--orange { --c: #ffa24a; }
-.bulb--pink { --c: #ff8fbf; }
-@keyframes twinkle {
-  from { opacity: .55; }
-  to { opacity: 1; }
-}
-.lamp-off .bulb { box-shadow: 0 0 20px 8px var(--c); }
 
 /* ---------- The desk lamp ---------- */
 .lamp {
@@ -171,8 +124,4 @@ body::after {
   .thing--plant,
   .thing--crayons { display: none; }
   .thing--pencil { width: 180px; right: -40px; top: auto; bottom: 150px; transform: rotate(-24deg); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .bulb { animation: none; opacity: .9; }
 }

@@ -1,5 +1,5 @@
-// The desk lamp: a tap turns it off (the room gets dark and the little
-// lights glow) and another tap turns it on again. Just for fun.
+// The desk lamp: a tap turns it off (the room gets dark) and another tap
+// turns it on again. Just for fun.
 
 export function setupLamp(lamp) {
   lamp.addEventListener('click', () => {
