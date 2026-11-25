@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Scrisori pentru Bubu</title>
+  <meta name="description" content="Scrie-i o scrisoare lui Bubu, buburuza de pluș! O pagină pentru copii, pe calculator, tabletă și telefon.">
+  <meta name="theme-color" content="#8fd3ff">
+  <link rel="icon" href="assets/favicon.ico" sizes="48x48">
+  <link rel="icon" href="assets/icon-192.png" type="image/png" sizes="192x192">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Fredoka:wght@600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/page.css">
+  <link rel="stylesheet" href="css/letter.css">
+</head>
+<body>
+  <!-- the sky behind everything: clouds and little hearts that float (decoration only) -->
+  <div class="sky" aria-hidden="true">
+    <span class="cloud cloud--1"></span>
+    <span class="cloud cloud--2"></span>
+    <span class="cloud cloud--3"></span>
+    <span class="float-heart float-heart--1">♥</span>
+    <span class="float-heart float-heart--2">♥</span>
+    <span class="float-heart float-heart--3">♥</span>
+    <span class="float-heart float-heart--4">♥</span>
+    <span class="hills"></span>
+  </div>
+
+  <header class="hero">
+    <h1 class="hero-title">Scrisori pentru <span class="hero-bubu">Bubu</span></h1>
+    <p class="hero-subtitle">Scrie-i lui Bubu ce ai pe suflet!</p>
+  </header>
+
+  <main class="main">
+    <!-- 1. writing the letter -->
+    <section class="desk" id="desk" aria-label="Scrisoarea ta">
+      <form class="paper" id="letter" novalidate autocomplete="off">
+        <!-- Bubu peeks over the top of the sheet -->
+        <img class="paper-bubu" src="assets/bubu.webp" alt="" width="120" height="120">
+        <span class="tape tape--left" aria-hidden="true"></span>
+        <span class="tape tape--right" aria-hidden="true"></span>
+
+        <div class="paper-lines">
+          <p class="paper-greeting" aria-hidden="true">Dragă Bubu,</p>
+          <label class="sr-only" for="message">Scrisoarea ta pentru Bubu</label>
+          <textarea class="paper-message" id="message" name="message" rows="5" maxlength="1000"
+                    placeholder="Scrie aici scrisoarea ta…" spellcheck="false"></textarea>
+          <p class="paper-sign">
+            <label for="name">Cu drag,</label>
+            <input class="paper-name" id="name" name="name" type="text" maxlength="40"
+                   placeholder="prenumele tău" autocomplete="given-name" spellcheck="false">
+          </p>
+        </div>
+      </form>
+
+      <!-- how much room is left on the sheet -->
+      <div class="room" id="room">
+        <div class="room-bar" aria-hidden="true"><span class="room-fill" id="room-fill"></span></div>
+        <p class="room-text" id="room-text" aria-live="polite"></p>
+      </div>
+
+      <p class="safety">
+        <svg class="safety-icon" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M10 14v-4a6 6 0 0 1 12 0v4" fill="none" stroke="#e0a800" stroke-width="3.5" stroke-linecap="round"/>
+          <rect x="5" y="13" width="22" height="16" rx="4" fill="#ffcf3f" stroke="#e0a800" stroke-width="2"/>
+          <circle cx="16" cy="20" r="2.4" fill="#8a5a00"/><path d="M16 21v4" stroke="#8a5a00" stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+        <span>Nu scrie adresa, numărul de telefon sau numele școlii. Bubu vrea doar să afle ce mai faci!</span>
+      </p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p class="foot-author">prof. ing. Robert Ștefan</p>
+  </footer>
+
+  <noscript><p class="noscript">Pentru a-i scrie lui Bubu trebuie activat JavaScript în browser.</p></noscript>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

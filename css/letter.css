@@ -1,0 +1,206 @@
+/* Scrisori pentru Bubu — the sheet of notebook paper the children write on,
+   the "room left on the sheet" bar and the send button under it. */
+
+.desk {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(18px, 3vw, 26px);
+}
+
+/* ---------- The sheet ---------- */
+.paper {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: calc(var(--line) * .9) clamp(18px, 5vw, 48px) calc(var(--line) * .8) clamp(54px, 11vw, 96px);
+  border-radius: 6px;
+  background: var(--paper);
+  box-shadow: var(--shadow-l);
+  transform: rotate(-.8deg);
+  animation: paper-in .7s var(--spring) both;
+}
+/* the red margin line of the notebook */
+.paper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: clamp(38px, 8vw, 72px);
+  border-left: 3px double var(--paper-margin);
+}
+/* a second sheet under it, a little turned */
+.paper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 6px;
+  background: #fbf4e2;
+  box-shadow: var(--shadow-s);
+  transform: rotate(2.2deg) translate(6px, 4px);
+}
+@keyframes paper-in {
+  from { opacity: 0; transform: translateY(40px) rotate(4deg) scale(.92); }
+  to { opacity: 1; transform: rotate(-.8deg); }
+}
+
+/* a strip of sticky tape on the two top corners */
+.tape {
+  position: absolute;
+  top: -14px;
+  width: clamp(70px, 14vw, 110px);
+  height: 30px;
+  background: rgba(255, 223, 120, .75);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+}
+.tape--left { left: clamp(10px, 4vw, 30px); transform: rotate(-8deg); }
+.tape--right { right: clamp(80px, 22vw, 170px); transform: rotate(6deg); }
+
+/* Bubu sits on the top right corner of the sheet and looks at the letter */
+.paper-bubu {
+  position: absolute;
+  top: calc(clamp(72px, 16vw, 120px) * -.62);
+  right: clamp(-6px, 1vw, 16px);
+  width: clamp(72px, 16vw, 120px);
+  height: auto;
+  filter: drop-shadow(0 4px 3px rgba(0, 0, 0, .25));
+  transform-origin: 50% 90%;
+  animation: bubu-look 5s ease-in-out infinite;
+}
+@keyframes bubu-look {
+  0%, 100% { transform: rotate(-4deg); }
+  50% { transform: rotate(5deg) translateY(-3px); }
+}
+/* while the child writes, Bubu bounces a little */
+.paper.is-writing .paper-bubu { animation: bubu-hop .45s ease-out; }
+@keyframes bubu-hop {
+  0% { transform: translateY(0) rotate(0); }
+  40% { transform: translateY(-12px) rotate(-6deg); }
+  100% { transform: translateY(0) rotate(0); }
+}
+
+/* The lines of the notebook: everything on the sheet (the greeting, the
+   letter and the signature) is exactly one or more lines high, so the
+   handwriting always sits on a blue line. */
+.paper-lines {
+  background-image: linear-gradient(transparent calc(var(--line) - 2px), var(--paper-line) calc(var(--line) - 2px));
+  background-size: 100% var(--line);
+  font-family: var(--font-hand);
+  font-size: calc(var(--line) * .62);
+  line-height: var(--line);
+  color: #1f3a8a;
+}
+.paper-greeting,
+.paper-sign {
+  margin: 0;
+  min-height: var(--line);
+}
+.paper-greeting {
+  color: var(--red-dark);
+}
+
+.paper-message,
+.paper-name {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: var(--line);
+  caret-color: var(--red);
+}
+.paper-message {
+  min-height: calc(var(--line) * 5);
+  resize: none;
+  overflow: hidden;
+}
+.paper-message::placeholder,
+.paper-name::placeholder {
+  color: #9fb0d4;
+  opacity: 1;
+}
+
+/* "Cu drag," and the name under it, on the right, like in a real letter */
+.paper-sign {
+  width: min(100%, 9.5em);
+  margin-left: auto;
+  color: var(--red-dark);
+}
+.paper-sign label { display: block; }
+.paper-name { color: #1f3a8a; }
+
+/* the sheet shakes when the child tries to send it empty */
+.paper.is-empty { animation: shake .45s ease-in-out; }
+@keyframes shake {
+  0%, 100% { transform: rotate(-.8deg); }
+  20% { transform: rotate(-.8deg) translateX(-12px); }
+  40% { transform: rotate(-.8deg) translateX(10px); }
+  60% { transform: rotate(-.8deg) translateX(-7px); }
+  80% { transform: rotate(-.8deg) translateX(4px); }
+}
+
+/* ---------- Room left on the sheet ---------- */
+.room {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 560px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .85);
+  box-shadow: var(--shadow-s);
+}
+.room-bar {
+  flex: 1;
+  height: 16px;
+  border-radius: 999px;
+  background: #e3e8f4;
+  overflow: hidden;
+}
+.room-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--green);
+  transform-origin: left;
+  transition: transform .2s ease, background-color .3s ease;
+}
+.room-text {
+  margin: 0;
+  flex: none;
+  font-weight: 800;
+  font-size: clamp(16px, 3.2vw, 20px);
+  white-space: nowrap;
+}
+.room.is-low .room-fill { background: var(--orange); }
+.room.is-full .room-fill { background: var(--red); }
+.room.is-full .room-text { color: var(--red-dark); }
+
+/* ---------- A word of advice for the child's safety ---------- */
+.safety {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 600px;
+  margin: 0;
+  padding: 12px 20px;
+  border-radius: var(--radius-s);
+  background: rgba(255, 255, 255, .85);
+  box-shadow: var(--shadow-s);
+  font-size: clamp(16px, 3vw, 19px);
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+.safety-icon { width: 34px; height: 34px; flex: none; }
+
+/* on narrow phones the room text goes under the bar */
+@media (max-width: 420px) {
+  .room { flex-direction: column; gap: 6px; border-radius: var(--radius-s); }
+  .room-bar { width: 100%; flex: none; }
+}

@@ -1,0 +1,40 @@
+/* Scrisori pentru Bubu — the design tokens: colours, fonts, sizes and the
+   look of the boxes. The colours are the ones of trenul-lui-bubu, so the
+   sites of Bubu look like one family. */
+
+:root {
+  --ink: #1b2440;
+  --ink-soft: #4a5378;
+  --red: #e53935;
+  --red-dark: #b71c1c;
+  --green: #2e9d57;
+  --green-dark: #1d6e3b;
+  --gold: #ffcf3f;
+  --gold-dark: #e0a800;
+  --orange: #ff8f2e;
+  --pink: #ff7aa8;
+  --sky-top: #8fd3ff;
+  --sky-bottom: #fff4d8;
+  --grass: #8fd16b;
+  --grass-dark: #5fae45;
+
+  /* the sheet of paper */
+  --paper: #fffdf6;
+  --paper-line: #b7d6f2;
+  --paper-margin: #f28b8b;
+  /* one line of the notebook: the text of the letter is written on it */
+  --line: clamp(42px, 9vw, 54px);
+
+  --font: 'Baloo 2', 'Comic Sans MS', system-ui, sans-serif;
+  --font-title: 'Fredoka', 'Baloo 2', 'Comic Sans MS', system-ui, sans-serif;
+  --font-hand: 'Patrick Hand', 'Comic Sans MS', 'Segoe Print', cursive;
+
+  --gap: clamp(12px, 3vw, 24px);
+  --radius-s: 18px;
+  --radius-m: 26px;
+  /* a solid shadow under the box (it "stands" on the page) and a soft one */
+  --shadow-s: 0 5px 0 rgba(0, 0, 0, .18);
+  --shadow-l: 0 10px 0 rgba(27, 36, 64, .12), 0 24px 50px rgba(27, 36, 64, .22);
+  /* the springy curve the boxes use to come in */
+  --spring: cubic-bezier(.2, 1.35, .4, 1);
+}
