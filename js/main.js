@@ -1,7 +1,9 @@
 // Scrisori pentru Bubu — the entry point: the sheet of paper, the send
-// button and the cards shown after the letter has gone (or has not).
+// button, the envelope and the cards shown after the letter has gone (or
+// has not).
 
 import { LIMITS } from './config.js';
+import { Envelope } from './envelope.js';
 import { Guard } from './guard.js';
 import { setupLamp } from './lamp.js';
 import { Letter } from './letter.js';
@@ -10,7 +12,7 @@ import { seconds } from './words.js';
 
 const $ = (id) => document.getElementById(id);
 
-const screens = { desk: $('desk'), sent: $('sent'), failed: $('failed') };
+const screens = { desk: $('desk'), post: $('post'), sent: $('sent'), failed: $('failed') };
 const sendButton = $('send');
 const sendLabel = $('send-label');
 const note = $('send-note');
@@ -25,6 +27,12 @@ const letter = new Letter({
   room: $('room'),
   roomFill: $('room-fill'),
   roomText: $('room-text'),
+});
+
+const envelope = new Envelope({
+  envelope: $('envelope'),
+  words: $('envelope-words'),
+  text: $('post-text'),
 });
 
 const guard = new Guard({ trap: $('website') });
@@ -66,13 +74,20 @@ async function send() {
     return;
   }
 
+  // the letter is sent while it goes into the envelope
   setBusy(true);
+  const sending = sendLetter(letter.read());
+  sending.catch(() => {}); // the failure is handled below, after the envelope
+  show('post');
+  await envelope.pack(letter.read().message);
   try {
-    await sendLetter(letter.read());
+    await sending;
     guard.sent();
     letter.clearMessage();
+    await envelope.fly();
     show('sent');
   } catch {
+    await envelope.refuse();
     show('failed');
   } finally {
     setBusy(false);
@@ -100,15 +115,15 @@ function showButton() {
 showButton();
 setInterval(showButton, 1000);
 
-/** Shows one screen: "desk" (the sheet), "sent" or "failed". */
+/** Shows one screen: "desk" (the sheet), "post" (the envelope), "sent" or "failed". */
 function show(name) {
   for (const [key, el] of Object.entries(screens)) el.hidden = key !== name;
-  document.querySelector('.main').classList.toggle('is-card', name !== 'desk');
+  document.querySelector('.main').classList.toggle('is-card', name === 'sent' || name === 'failed');
   window.scrollTo({ top: 0 });
   if (name === 'desk') {
     letter.update();
     letter.focus();
-  } else {
+  } else if (name !== 'post') {
     screens[name].querySelector('.card-title').focus({ preventScroll: true });
   }
 }

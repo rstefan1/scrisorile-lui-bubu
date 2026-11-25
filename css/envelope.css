@@ -1,0 +1,182 @@
+/* Scrisori pentru Bubu — the envelope: the letter slides in, the flap
+   closes, a heart seals it, a stamp with Bubu lands on it and it flies away.
+   js/envelope.js adds the classes one after another:
+     (none)      open envelope, the little letter above it
+     is-in       the letter is inside
+     is-closed   the flap is down, sealed with a heart
+     is-stamped  the stamp is on
+     is-waiting  waiting for Google: the envelope hops in place
+     is-flying   off it goes, to Bubu
+     is-back     it could not go: it shakes its head */
+
+.post {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(24px, 5vw, 40px);
+  /* room above the envelope for the open flap and the little letter */
+  padding-top: clamp(150px, 34vw, 230px);
+  min-height: 60vh;
+}
+
+.envelope {
+  --w: min(360px, 82vw);
+  position: relative;
+  width: var(--w);
+  height: calc(var(--w) * .64);
+  perspective: 900px;
+}
+/* from the back to the front: back, open flap, letter, front pocket,
+   closed flap, seal and stamp */
+.envelope > * { position: absolute; }
+.envelope-back { z-index: 0; }
+.envelope-flap { z-index: 1; }
+.envelope-letter { z-index: 2; }
+.envelope-front { z-index: 3; }
+.envelope.is-closed .envelope-flap { z-index: 4; }
+.envelope-seal,
+.envelope-stamp { z-index: 5; }
+
+.envelope-back {
+  inset: 0;
+  border-radius: 10px;
+  background: #e7b97c;
+  box-shadow: var(--shadow-l);
+}
+
+/* the little letter, with the first words the child wrote */
+.envelope-letter {
+  left: 7%;
+  right: 7%;
+  top: 5%;
+  height: 92%;
+  padding: 10% 9% 0;
+  border-radius: 4px;
+  background:
+    linear-gradient(transparent 27px, var(--paper-line) 27px) 0 18px / 100% 28px,
+    var(--paper);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .15);
+  transform: translateY(-78%);
+  transition: transform .75s cubic-bezier(.5, 0, .3, 1);
+}
+.envelope-words {
+  margin: 0;
+  max-height: 84px;
+  overflow: hidden;
+  font: 22px / 28px var(--font-hand);
+  color: #1f3a8a;
+  overflow-wrap: anywhere;
+}
+.envelope.is-in .envelope-letter { transform: translateY(0); }
+
+/* the front pocket: the envelope with a V cut at the top */
+.envelope-front {
+  inset: 0;
+  border-radius: 10px;
+  background: linear-gradient(160deg, #fbe2b8, #f3cf98);
+  clip-path: polygon(0 0, 50% 58%, 100% 0, 100% 100%, 0 100%);
+}
+/* the airmail stripes along the bottom edge */
+.envelope-front::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 12px;
+  border-radius: 0 0 10px 10px;
+  background: repeating-linear-gradient(-45deg, var(--red) 0 14px, #fff 14px 22px, #1e6fd9 22px 36px, #fff 36px 44px);
+}
+
+/* the flap: open (turned up, behind the letter), then closed (in front) */
+.envelope-flap {
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 62%;
+  background: linear-gradient(#f0c88e, #e9bb7b);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top;
+  transform: rotateX(180deg);
+  transition: transform .45s ease-in-out, z-index 0s linear .22s;
+}
+.envelope.is-closed .envelope-flap { transform: rotateX(0); }
+
+/* the heart that seals the flap */
+.envelope-seal {
+  left: 50%;
+  top: 62%;
+  width: 46px;
+  height: 46px;
+  margin: -27px 0 0 -23px;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 3px 0 var(--red-dark), inset 0 -4px 0 rgba(0, 0, 0, .15);
+  color: #fff;
+  font-size: 26px;
+  line-height: 46px;
+  text-align: center;
+  opacity: 0;
+  transform: scale(2);
+  transition: opacity .2s ease .35s, transform .35s var(--spring) .35s;
+}
+.envelope.is-closed .envelope-seal { opacity: 1; transform: scale(1); }
+
+/* the stamp with Bubu on it, top right */
+.envelope-stamp {
+  right: 6%;
+  top: 9%;
+  width: 21%;
+  aspect-ratio: 4 / 5;
+  padding: 6px;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .25);
+  opacity: 0;
+  transform: scale(2.4) rotate(-20deg);
+  transition: opacity .15s ease, transform .4s var(--spring);
+}
+.envelope-stamp img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #ffe9a8;
+  /* the perforated line of a stamp */
+  outline: 2px dashed #e0a800;
+  outline-offset: 2px;
+}
+.envelope.is-stamped .envelope-stamp { opacity: 1; transform: rotate(6deg); }
+
+.envelope.is-waiting { animation: envelope-hop .9s ease-in-out infinite; }
+@keyframes envelope-hop {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  30% { transform: translateY(-16px) rotate(-3deg); }
+  60% { transform: translateY(0) rotate(2deg); }
+}
+
+.envelope.is-flying { animation: envelope-fly 1s cubic-bezier(.5, -0.35, .7, .4) forwards; }
+@keyframes envelope-fly {
+  0% { transform: none; opacity: 1; }
+  25% { transform: translate(-4vw, 3vh) rotate(-8deg) scale(1.04); }
+  100% { transform: translate(55vw, -90vh) rotate(24deg) scale(.3); opacity: 0; }
+}
+
+.envelope.is-back { animation: envelope-no .6s ease-in-out; }
+@keyframes envelope-no {
+  0%, 100% { transform: none; }
+  20% { transform: rotate(-7deg); }
+  40% { transform: rotate(6deg); }
+  60% { transform: rotate(-4deg); }
+  80% { transform: rotate(2deg); }
+}
+
+.post-text {
+  margin: 0;
+  padding: 10px 26px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .9);
+  box-shadow: var(--shadow-s);
+  font-size: clamp(22px, 4.5vw, 30px);
+  font-weight: 800;
+  text-align: center;
+}

@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="css/desk.css">
   <link rel="stylesheet" href="css/letter.css">
   <link rel="stylesheet" href="css/post.css">
+  <link rel="stylesheet" href="css/envelope.css">
 </head>
 <body>
   <!-- the wooden table seen from above and the warm light of the lamp (decoration only) -->
@@ -174,7 +175,20 @@
       </p>
     </section>
 
-    <!-- 2. the letter has gone -->
+    <!-- 2. the letter goes into an envelope and flies to Bubu (js/envelope.js) -->
+    <section class="post" id="post" hidden aria-labelledby="post-text">
+      <div class="envelope" id="envelope" aria-hidden="true">
+        <div class="envelope-back"></div>
+        <div class="envelope-letter"><p class="envelope-words" id="envelope-words"></p></div>
+        <div class="envelope-front"></div>
+        <div class="envelope-flap"></div>
+        <div class="envelope-seal">♥</div>
+        <div class="envelope-stamp"><img src="assets/bubu.webp" alt="" width="60" height="60"></div>
+      </div>
+      <p class="post-text" id="post-text" aria-live="polite"></p>
+    </section>
+
+    <!-- 3. the letter has gone -->
     <section class="card card--sent" id="sent" hidden aria-labelledby="sent-title">
       <div class="card-bubu" aria-hidden="true">
         <img src="assets/bubu.webp" alt="" width="160" height="160">
@@ -189,7 +203,7 @@
       <button class="button button--green" id="again" type="button">Scrie încă o scrisoare</button>
     </section>
 
-    <!-- 3. the letter could not go -->
+    <!-- 4. the letter could not go -->
     <section class="card card--failed" id="failed" hidden aria-labelledby="failed-title">
       <div class="card-bubu card-bubu--sad" aria-hidden="true">
         <img src="assets/bubu.webp" alt="" width="160" height="160">
