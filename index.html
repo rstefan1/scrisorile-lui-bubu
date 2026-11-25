@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/page.css">
   <link rel="stylesheet" href="css/letter.css">
+  <link rel="stylesheet" href="css/post.css">
 </head>
 <body>
   <!-- the sky behind everything: clouds and little hearts that float (decoration only) -->
@@ -61,6 +62,15 @@
         <p class="room-text" id="room-text" aria-live="polite"></p>
       </div>
 
+      <button class="button send" id="send" type="button">
+        <svg class="button-icon" viewBox="0 0 32 32" aria-hidden="true">
+          <rect x="3" y="7" width="26" height="19" rx="3" fill="#fff"/>
+          <path d="M4 9l12 9 12-9" fill="none" stroke="#e53935" stroke-width="2.6" stroke-linejoin="round"/>
+        </svg>
+        <span id="send-label">Trimite scrisoarea</span>
+      </button>
+      <p class="send-note" id="send-note" aria-live="polite" hidden></p>
+
       <p class="safety">
         <svg class="safety-icon" viewBox="0 0 32 32" aria-hidden="true">
           <path d="M10 14v-4a6 6 0 0 1 12 0v4" fill="none" stroke="#e0a800" stroke-width="3.5" stroke-linecap="round"/>
@@ -69,6 +79,31 @@
         </svg>
         <span>Nu scrie adresa, numărul de telefon sau numele școlii. Bubu vrea doar să afle ce mai faci!</span>
       </p>
+    </section>
+
+    <!-- 2. the letter has gone -->
+    <section class="card card--sent" id="sent" hidden aria-labelledby="sent-title">
+      <div class="card-bubu" aria-hidden="true">
+        <img src="assets/bubu.webp" alt="" width="160" height="160">
+        <span class="burst burst--1">♥</span>
+        <span class="burst burst--2">♥</span>
+        <span class="burst burst--3">★</span>
+        <span class="burst burst--4">♥</span>
+        <span class="burst burst--5">★</span>
+      </div>
+      <h2 class="card-title" id="sent-title" tabindex="-1">Scrisoarea a ajuns la Bubu!</h2>
+      <p class="card-text">Bubu s-a bucurat tare mult. O s-o citească de mai multe ori, cu mare drag!</p>
+      <button class="button button--green" id="again" type="button">Scrie încă o scrisoare</button>
+    </section>
+
+    <!-- 3. the letter could not go -->
+    <section class="card card--failed" id="failed" hidden aria-labelledby="failed-title">
+      <div class="card-bubu card-bubu--sad" aria-hidden="true">
+        <img src="assets/bubu.webp" alt="" width="160" height="160">
+      </div>
+      <h2 class="card-title" id="failed-title" tabindex="-1">Ups! Scrisoarea nu a plecat.</h2>
+      <p class="card-text">Poate nu ești conectat la internet. Nu-i nimic: scrisoarea te așteaptă pe foaie. Mai încearcă o dată!</p>
+      <button class="button" id="retry" type="button">Înapoi la scrisoare</button>
     </section>
   </main>
 
